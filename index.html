@@ -1,0 +1,23 @@
+select c.nombre, sum (d.cantidad*d.precio_unitario) AS total_gastado
+from clientes c
+join ventas v on c.id_cliente = v.id_cliente
+join detalle_ventas d on v.id_venta = d.id_venta
+GROUP BY c.nombre
+ORDER BY total_gastado DESC
+limit 1;
+
+select p.nombre,	sum (d.cantidad) AS total_vendido
+from detalle_ventas d
+join productos p on d.id_producto = p.id_producto
+GROUP BY p.nombre
+ORDER BY total_vendido DESC
+limit 1;
+
+select v.id_venta, c.nombre AS nombre_cliente,
+		v.fecha,
+		sum (d.cantidad*precio_unitario)AS total_venta
+from ventas v
+join clientes c on v.id_cliente = c.id_cliente
+join detalle_ventas d on v.id_venta=d.id_venta
+GROUP BY v.id_venta, c.nombre, v.fecha;
+
